@@ -103,28 +103,32 @@ namespace BankApp
             {
                 if (userbox.Text == login.USERNAME)
                 {
-                    passwordbox.Text = login.PASSWORD;
-                }
 
-                if (login.PASSWORD == passwordbox.Text)
-                {
-                    MessageBox.Show("Login Successful");
-                    S.Visibility = Visibility.Collapsed;
-                    P.Visibility = Visibility.Visible;
 
-                    if (File.Exists(string.Format(@"C:\Users\Public\TestFolder\{0}.txt", userbox.Text)))
+                    if (login.PASSWORD == passwordbox.Text)
                     {
-                        string read1 = File.ReadAllText(string.Format(@"C:\Users\Public\TestFolder\{0}.txt", userbox.Text));
-                        Account a1 = JsonConvert.DeserializeObject<Account>(read1);
+                        MessageBox.Show("Login Successful");
+                        S.Visibility = Visibility.Collapsed;
+                        P.Visibility = Visibility.Visible;
 
-                        savingbox.Text = savingbalance.ToString();
-                       // currentbalance = a1.Cbalance;
+                        if (File.Exists(string.Format(@"C:\Users\Public\TestFolder\{0}.txt", userbox.Text)))
+                        {
+                            string read1 = File.ReadAllText(string.Format(@"C:\Users\Public\TestFolder\{0}.txt", userbox.Text));
+                            Account a1 = JsonConvert.DeserializeObject<Account>(read1);
 
-                        
+                            savingbox.Text = savingbalance.ToString();
+                            // currentbalance = a1.Cbalance;
 
+
+
+                        }
+                        else
+                        {
+
+                        }
+                     
+                        getbalance();
                     }
-                    getbalance();
-
                 }
                 else
                 {
@@ -136,10 +140,32 @@ namespace BankApp
 
         }
 
+        
+
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
+            
+           if(comboaccount.SelectedItem.ToString() == "Saving Account")
+            {
+                if(radiodeposit.IsChecked==true)
+                {
+                    int number = 0;
 
+                    number =Convert.ToInt32( amountbox.Text.ToString());
+                    Deposit(Convert.ToInt32(number), "Saving Account");
+                }
+            }
+        }
 
+        public static void Deposit(int amount, string account)
+        {
+            if (account == "Saving Account")
+            {
+                int savingsbalance;
+                savingsbalance = Convert.ToInt32(savingsbalance) + amount;
+            }
+
+           
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel Name="S"  >
+        <StackPanel Name="S"  Visibility="Collapsed" >
             <StackPanel Name="S1" Margin="10" Orientation="Horizontal">
                 <TextBlock Name="uesrblock" Height="40" Width="150" Text="Username :-" FontSize="20" HorizontalAlignment="Left"></TextBlock>
                 <TextBox Height="40" Width="200" Name="userbox" FontSize="20"></TextBox>
@@ -26,7 +26,7 @@
 
         </StackPanel>
 
-        <StackPanel Name="P" Visibility="Collapsed">
+        <StackPanel Name="P">
             <StackPanel Name="Balance" Orientation="Vertical">
             <StackPanel Name="P1" Margin="10" Orientation="Horizontal" >
                 <TextBlock Name="savingblock" Text="Savings Balance:" Height="20" Width="120" FontSize="13" FontWeight="Bold"></TextBlock>
@@ -41,17 +41,17 @@
          </StackPanel>
             <StackPanel Margin="10" Orientation="Horizontal">
                 <TextBlock Text="Account Type:-" FontSize="15" Height="30" Width="150" FontWeight="Bold"></TextBlock>
-                <ComboBox Height="30" Width="200" FontSize="14" >
-                    <ComboBoxItem IsSelected="True">Saving Account</ComboBoxItem>
-                    <ComboBoxItem >Current Account</ComboBoxItem>
+                <ComboBox Name="comboaccount"  Height="30" Width="200" FontSize="14" >
+                    <ComboBoxItem  Name="combosav" IsSelected="True">Saving Account</ComboBoxItem>
+                    <ComboBoxItem Name="combocurrent">Current Account</ComboBoxItem>
                     
                 </ComboBox>
             </StackPanel>
 
             <StackPanel Name="Radiobtn" Margin="10" Orientation="Vertical">
-                <RadioButton FontSize="15" Height="30" Width="100" HorizontalAlignment="Left">Deposit</RadioButton>
-                <RadioButton FontSize="15" Height="30" Width="100" HorizontalAlignment="Left">Withdraw</RadioButton>
-                <RadioButton FontSize="15" Height="30" Width="100" HorizontalAlignment="Left">Transfer</RadioButton>
+                <RadioButton Name="radiodeposit" FontSize="15" Height="30" Width="100" HorizontalAlignment="Left">Deposit</RadioButton>
+                <RadioButton Name="radiowithdraw" FontSize="15" Height="30" Width="100" HorizontalAlignment="Left">Withdraw</RadioButton>
+                <RadioButton Name="radiotransfer" FontSize="15" Height="30" Width="100" HorizontalAlignment="Left">Transfer</RadioButton>
             </StackPanel>
 
             <StackPanel Name="Amount" Margin="10" Orientation="Horizontal">
