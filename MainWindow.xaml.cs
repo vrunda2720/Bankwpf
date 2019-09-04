@@ -26,14 +26,33 @@ namespace BankApp
     {
         public int savingbalance = 0;
         public int currentbalance = 0;
-        public string username;
-        public string password;
+        public string username1;
+        public string password1;
 
 
         public MainWindow()
         {
             InitializeComponent();
+
+            if (File.Exists(string.Format(@"C:\Users\Public\TestFolder\{0}.txt", username1)))
+            {
+                string read = File.ReadAllText(string.Format(@"C:\Users\Public\TestFolder\{0}.txt", username1));
+                Account a1 = JsonConvert.DeserializeObject<Account>(read);
+
+                //savingbalance = a1.Sbalance;
+                //currentbalance = a1.Cbalance;
+
+                savingbox.Text =a1.Sbalance.ToString();
+                
+            }
+            getbalance();
             
+
+        }
+
+        private void getbalance()
+        {
+           
         }
 
         private void Signup_Click(object sender, RoutedEventArgs e)
@@ -53,6 +72,9 @@ namespace BankApp
                     JArray bankarray = new JArray();
                     bankarray.Add(bank);
                     File.WriteAllText(@"C:\Users\Public\TestFolder\Bank.txt", bankarray.ToString());
+
+                    S.Visibility = Visibility.Collapsed;
+                    P.Visibility = Visibility.Visible;
                 }
                 else
                 {
@@ -61,7 +83,12 @@ namespace BankApp
                     string newjson = JsonConvert.SerializeObject(data);
                     File.WriteAllText(@"C:\Users\Public\TestFolder\Bank.txt", newjson);
 
+                    S.Visibility = Visibility.Collapsed;
+                    P.Visibility = Visibility.Visible;
+
                 }
+                username1 = userbox.Text;
+                password1 = passwordbox.Text;
             }
             else
             {
@@ -71,6 +98,9 @@ namespace BankApp
                 JArray bankarray = new JArray();
                 bankarray.Add(bank);
                 File.WriteAllText(@"C:\Users\Public\TestFolder\Bank.txt", bankarray.ToString());
+
+                S.Visibility = Visibility.Collapsed;
+                P.Visibility = Visibility.Visible;
             }
             
         }
@@ -79,12 +109,26 @@ namespace BankApp
         {
             string read = File.ReadAllText(@"C:\Users\Public\TestFolder\Bank.txt");
             List<Login> data = JsonConvert.DeserializeObject<List<Login>>(read);
-            password = string.Empty;
-            foreach(var login in data)
+            password1 = string.Empty;
+            foreach (var login in data)
             {
-                if(userbox.Text==login.USERNAME)
+                if (userbox.Text == login.USERNAME)
                 {
                     passwordbox.Text = login.PASSWORD;
+                }
+
+                if (login.PASSWORD == passwordbox.Text)
+                {
+                    MessageBox.Show("Login Successful");
+                    S.Visibility = Visibility.Collapsed;
+                    P.Visibility = Visibility.Visible;
+
+                }
+                else
+                {
+                    MessageBox.Show("Invalid login");
+                    username1 = userbox.Text;
+                    password1 = passwordbox.Text;
                 }
             }
 
@@ -92,6 +136,7 @@ namespace BankApp
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
+
 
         }
 
