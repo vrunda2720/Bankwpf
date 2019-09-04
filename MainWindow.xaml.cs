@@ -34,18 +34,7 @@ namespace BankApp
         {
             InitializeComponent();
 
-            if (File.Exists(string.Format(@"C:\Users\Public\TestFolder\{0}.txt", username1)))
-            {
-                string read = File.ReadAllText(string.Format(@"C:\Users\Public\TestFolder\{0}.txt", username1));
-                Account a1 = JsonConvert.DeserializeObject<Account>(read);
-
-                //savingbalance = a1.Sbalance;
-                //currentbalance = a1.Cbalance;
-
-                savingbox.Text =a1.Sbalance.ToString();
-                
-            }
-            getbalance();
+            
             
 
         }
@@ -122,6 +111,19 @@ namespace BankApp
                     MessageBox.Show("Login Successful");
                     S.Visibility = Visibility.Collapsed;
                     P.Visibility = Visibility.Visible;
+
+                    if (File.Exists(string.Format(@"C:\Users\Public\TestFolder\{0}.txt", userbox.Text)))
+                    {
+                        string read1 = File.ReadAllText(string.Format(@"C:\Users\Public\TestFolder\{0}.txt", userbox.Text));
+                        Account a1 = JsonConvert.DeserializeObject<Account>(read1);
+
+                        savingbox.Text = savingbalance.ToString();
+                       // currentbalance = a1.Cbalance;
+
+                        
+
+                    }
+                    getbalance();
 
                 }
                 else
