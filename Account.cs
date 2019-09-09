@@ -8,7 +8,8 @@ namespace BankApp
 {
     class Account
     {
-        public int Sbalance { get; set; }
-        public int Cbalance { get; set; }
+        public int SavingsBalance { get; set; }
+        public int CurrentBalance { get; set; }
+        public int FdBalance { get; set; }
     }
 }

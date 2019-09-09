@@ -8,8 +8,8 @@ namespace BankApp
 {
     class Login
     {
-        public string USERNAME { get; set; }
-        public string PASSWORD { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
         
     }
 }

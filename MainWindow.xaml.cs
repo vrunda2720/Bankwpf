@@ -24,153 +24,379 @@ namespace BankApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public int savingbalance = 0;
-        public int currentbalance = 0;
-        public string username1;
-        public string password1;
 
+
+        #region Fields
+        private static int _savingBalance = 0;
+        private static int _currentBalance = 0;
+        private static int _fdBalance = 0;
+        private string _username;
+        private string _password;
+
+        private string _userLoginFile = @"C:\Users\Public\TestFolder\UserLogin.txt";
+        private string _userFile = @"C:\Users\Public\Testfolder\{0}.txt";
+        #endregion
+
+
+        #region Constructor
 
         public MainWindow()
         {
             InitializeComponent();
 
-            
-            
-
         }
 
-        private void getbalance()
-        {
-           
-        }
+        #endregion
 
+        #region Events
         private void Signup_Click(object sender, RoutedEventArgs e)
         {
-            Login l1 = new Login();
-            l1.USERNAME = userbox.Text;
-            l1.PASSWORD = passwordbox.Text;
+            Login oLogin = new Login();
+            oLogin.Username = inUsername.Text;
+            oLogin.Password = inPassword.Text;
 
-            if(File.Exists(@"C:\Users\Public\TestFolder\Bank.txt"))
+            if (File.Exists(_userLoginFile))
             {
-                string read = File.ReadAllText(@"C:\Users\Public\TestFolder\Bank.txt");
-                if(read==string.Empty)
+                string userLogins = File.ReadAllText(_userLoginFile);  //duplicate
+                if (userLogins == string.Empty)
                 {
-                    JavaScriptSerializer js = new JavaScriptSerializer();
-                    string jsonData = js.Serialize(l1);
-                    JObject bank = JObject.Parse(jsonData);
-                    JArray bankarray = new JArray();
-                    bankarray.Add(bank);
-                    File.WriteAllText(@"C:\Users\Public\TestFolder\Bank.txt", bankarray.ToString());
+                    JavaScriptSerializer js = new JavaScriptSerializer();//duplicate
+                    string jsonData = js.Serialize(oLogin);                 //duplicate
+                    JObject user = JObject.Parse(jsonData);             //duplicate
+                    JArray userArray = new JArray();                    //duplicate
+                    userArray.Add(user);                                //duplicate
+                    File.WriteAllText(_userLoginFile, userArray.ToString());//duplicate
 
-                    S.Visibility = Visibility.Collapsed;
-                    P.Visibility = Visibility.Visible;
+                    signUpPanel.Visibility = Visibility.Collapsed;  //duplicate
+                    profilePanel.Visibility = Visibility.Visible;    //duplicate
                 }
                 else
                 {
-                    List<Login> data = JsonConvert.DeserializeObject<List<Login>>(read);
-                    data.Add(l1);
-                    string newjson = JsonConvert.SerializeObject(data);
-                    File.WriteAllText(@"C:\Users\Public\TestFolder\Bank.txt", newjson);
+                    List<Login> userLoginsList = JsonConvert.DeserializeObject<List<Login>>(userLogins);//duplicate
+                    userLoginsList.Add(oLogin);
+                    string newLoginsList = JsonConvert.SerializeObject(userLoginsList);
+                    File.WriteAllText(_userLoginFile, newLoginsList);
 
-                    S.Visibility = Visibility.Collapsed;
-                    P.Visibility = Visibility.Visible;
+                    signUpPanel.Visibility = Visibility.Collapsed;   //duplicate
+                    profilePanel.Visibility = Visibility.Visible;     //duplicate
 
                 }
-                username1 = userbox.Text;
-                password1 = passwordbox.Text;
+                _username = inUsername.Text;       //duplicate
+                _password = inPassword.Text;   //duplicate
             }
             else
             {
-                JavaScriptSerializer js = new JavaScriptSerializer();
-                string jsonData = js.Serialize(l1);
-                JObject bank = JObject.Parse(jsonData);
-                JArray bankarray = new JArray();
-                bankarray.Add(bank);
-                File.WriteAllText(@"C:\Users\Public\TestFolder\Bank.txt", bankarray.ToString());
+                JavaScriptSerializer js = new JavaScriptSerializer();//duplicate
+                string jsonData = js.Serialize(oLogin);                  //duplicate
+                JObject user = JObject.Parse(jsonData);             //duplicate
+                JArray userArray = new JArray();                    //duplicate
+                userArray.Add(user);                                //duplicate
+                File.WriteAllText(_userLoginFile, userArray.ToString());//duplicate
 
-                S.Visibility = Visibility.Collapsed;
-                P.Visibility = Visibility.Visible;
+                signUpPanel.Visibility = Visibility.Collapsed;    //duplicate
+                profilePanel.Visibility = Visibility.Visible;      //duplicate
             }
-            
+
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            string read = File.ReadAllText(@"C:\Users\Public\TestFolder\Bank.txt");
-            List<Login> data = JsonConvert.DeserializeObject<List<Login>>(read);
-            password1 = string.Empty;
-            foreach (var login in data)
-            {
-                if (userbox.Text == login.USERNAME)
+                string userLogins = File.ReadAllText(_userLoginFile); //duplicate
+                List<Login> userLoginsList = JsonConvert.DeserializeObject<List<Login>>(userLogins);    //duplicate
+                _password = string.Empty;
+                foreach (var login in userLoginsList)
                 {
-
-
-                    if (login.PASSWORD == passwordbox.Text)
+                    if (inUsername.Text == login.Username)
                     {
-                        MessageBox.Show("Login Successful");
-                        S.Visibility = Visibility.Collapsed;
-                        P.Visibility = Visibility.Visible;
 
-                        if (File.Exists(string.Format(@"C:\Users\Public\TestFolder\{0}.txt", userbox.Text)))
+                        if (inPassword.Text == login.Password)
                         {
-                            string read1 = File.ReadAllText(string.Format(@"C:\Users\Public\TestFolder\{0}.txt", userbox.Text));
-                            Account a1 = JsonConvert.DeserializeObject<Account>(read1);
+                            MessageBox.Show("Login Successful");
+                            signUpPanel.Visibility = Visibility.Collapsed;    //duplicate
+                            profilePanel.Visibility = Visibility.Visible;      //duplicate
 
-                            savingbox.Text = savingbalance.ToString();
-                            // currentbalance = a1.Cbalance;
+                            _username = inUsername.Text;       //duplicate
+                            _password = inPassword.Text;   //duplicate 
+
+                            if (File.Exists(string.Format(_userFile, inUsername.Text)))
+                            {
+                                string userAccount = File.ReadAllText(string.Format(_userFile, inUsername.Text));
+                                Account ouserAccount = JsonConvert.DeserializeObject<Account>(userAccount);
+
+                                outSavingBox.Text = ouserAccount.SavingsBalance.ToString();
+                                outCurrentBox.Text = ouserAccount.CurrentBalance.ToString();
+                                outFdBox.Text = ouserAccount.FdBalance.ToString();
+                                _savingBalance = ouserAccount.SavingsBalance;   //duplicate
+                                _currentBalance = ouserAccount.CurrentBalance;  //duplicate
+                                _fdBalance = ouserAccount.FdBalance;
+                                break;
 
 
+                            }
+                            else
+                            {
+                                outSavingBox.Text = _savingBalance.ToString();
+                                outCurrentBox.Text = _currentBalance.ToString();
+                                outFdBox.Text = _fdBalance.ToString();
+                            }
 
+                            break;
                         }
-                        else
-                        {
-
-                        }
-                     
-                        getbalance();
                     }
+                    else
+                         {
+                             MessageBox.Show("Invalid login");
+                            _username = inUsername.Text;       //duplicate
+                            _password = inPassword.Text;   //duplicate
+                         }
                 }
-                else
-                {
-                    MessageBox.Show("Invalid login");
-                    username1 = userbox.Text;
-                    password1 = passwordbox.Text;
-                }
+
             }
 
-        }
-
+            
+            
         
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            
-           if(comboaccount.SelectedItem.ToString() == "Saving Account")
-            {
-                if(radiodeposit.IsChecked==true)
-                {
-                    int number = 0;
 
-                    number =Convert.ToInt32( amountbox.Text.ToString());
+            if (comboaccount.SelectionBoxItem.ToString() == "Saving Account")
+            {
+                if (radiodeposit.IsChecked == true)//duplicate
+                {
+                    int number = 0;//duplicate
+
+                    number = Convert.ToInt32(amountbox.Text.ToString());//duplicate
                     Deposit(Convert.ToInt32(number), "Saving Account");
                 }
-            }
-        }
 
-        public static void Deposit(int amount, string account)
-        {
-            if (account == "Saving Account")
-            {
-                int savingsbalance;
-                savingsbalance = Convert.ToInt32(savingsbalance) + amount;
-            }
+                if (radiowithdraw.IsChecked == true)//duplicate
+                {
+                    int number = 0;//duplicate
+                    number = Convert.ToInt32(amountbox.Text.ToString());//duplicate
 
-           
+                    if (Convert.ToInt32(number) > _savingBalance)
+                    {
+                        MessageBox.Show("Your saving account balance is not enough");
+                    }
+                    else
+                    {
+                        Withdraw(Convert.ToInt32(number), "Saving Account");
+                        MessageBox.Show("Your withdraw complete...");                   //duplicate
+                        MessageBox.Show("Now your saving balance is:" + _savingBalance); //duplicate
+                    }
+
+                }
+
+                if (radiotransfer.IsChecked == true)//duplicate
+                {
+                    int number = 0;                                     //duplicate
+                    number = Convert.ToInt32(amountbox.Text.ToString());//duplicate
+
+                    if (Convert.ToInt32(number) > _savingBalance)
+                    {
+                        MessageBox.Show("Your saving account balance is not enough");
+                    }
+                    else
+                    {
+                        Transfer(Convert.ToInt32(number), "Saving Account");
+                        MessageBox.Show("Your Transfer complete...");                   //duplicate
+                        MessageBox.Show("Now your saving balance is:" + _savingBalance); //duplicate
+                    }
+
+                }
+
+                if (radiofd.IsChecked == true)
+                {
+                    
+
+                    if (radioFdDeposit.IsChecked == true)
+                    {
+                        int number = 0;                                     //duplicate
+                        number = Convert.ToInt32(amountbox.Text.ToString());//duplicate
+
+                        if (Convert.ToInt32(number) > _savingBalance)
+                        {
+                            MessageBox.Show("Your savings balance is not enough.");
+                        }
+                        else
+                        {
+                            savingFD(Convert.ToInt32(number), "FdDeposit");
+                            MessageBox.Show("your FD deposit complete...");
+                            MessageBox.Show("Now your FD balance is:" + _fdBalance);
+                            MessageBox.Show("Your saving balance is:" + _savingBalance);
+                        }
+
+                    }
+
+                    else if (radioFdWithdraw.IsChecked == true)
+                    {
+
+                        int number = 0;                                     //duplicate
+                        number = Convert.ToInt32(amountbox.Text.ToString());//duplicate
+                        if (Convert.ToInt32(number) > _fdBalance)
+                        {
+                            Console.WriteLine("Your FD balance is not enough.");
+
+                        }
+                        else
+                        {
+                            savingFD(Convert.ToInt32(number), "FdWithdraw");
+                            MessageBox.Show("Your FD withdraw complete...");
+                            MessageBox.Show("Now your FD balance is:" + _fdBalance);
+                            MessageBox.Show("Your saving balance is:" + _savingBalance);
+
+                        }
+                    }
+
+                }
+
+
+                if (comboaccount.SelectionBoxItem.ToString() == "Current Account")
+                {
+                    if (radiodeposit.IsChecked == true)//duplicate
+                    {
+                        int number = 0;                                 //duplicate
+
+                        number = Convert.ToInt32(amountbox.Text.ToString());//duplicate
+                        Deposit(Convert.ToInt32(number), "Current Account");
+                    }
+
+                    if (radiowithdraw.IsChecked == true)//duplicate
+
+                    {
+                        int number = 0;                                     //duplicate
+                        number = Convert.ToInt32(amountbox.Text.ToString());//duplicate
+
+                        if (Convert.ToInt32(number) > _currentBalance)
+                        {
+                            MessageBox.Show("Your current account balance is not enough");
+                        }
+                        else
+                        {
+                            Withdraw(Convert.ToInt32(number), "Current Account");
+                            MessageBox.Show("Your withdraw complete...");       //duplicate
+                            MessageBox.Show("Now your current balance is:" + _currentBalance);//duplicate
+
+                        }
+                    }
+
+                    if (radiotransfer.IsChecked == true)//duplicate
+                    {
+                        int number = 0;                                     //duplicate
+                        number = Convert.ToInt32(amountbox.Text.ToString());//duplicate
+
+                        if (Convert.ToInt32(number) > _currentBalance)
+                        {
+                            MessageBox.Show("Your current account balance is not enough");
+
+                        }
+                        else
+                        {
+                            Transfer(Convert.ToInt32(number), "Current Account");
+                            MessageBox.Show("Your Transfer complete...");       //duplicate
+                            MessageBox.Show("Now your current balance is:" + _currentBalance);//duplicate
+                        }
+                    }
+                }
+
+
+            }
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            Account oAccount = new Account();
+            oAccount.SavingsBalance = _savingBalance;  //duplicate
+            oAccount.CurrentBalance = _currentBalance; //duplicate
+            oAccount.FdBalance = _fdBalance;
+            string accountData = JsonConvert.SerializeObject(oAccount, Formatting.Indented);
+            File.WriteAllText(string.Format(_userFile, _username), accountData);
 
+            MessageBox.Show("Balance is save.");
+        }
+
+        #endregion
+
+        #region Methods
+        private void savingFD(int amount, string action)
+        {
+            if (action == "FdDeposit")
+            {
+                _fdBalance = _fdBalance + amount;
+                outFdBox.Text = _fdBalance.ToString();
+                _savingBalance = _savingBalance - amount;
+                outSavingBox.Text = _savingBalance.ToString();
+            }
+            else if (action == "FdWithdraw")
+            {
+
+                double interest = 0.1 * amount;
+                int amount1 = amount + Convert.ToInt32(interest);
+                _fdBalance = _fdBalance - amount;
+                outFdBox.Text = _fdBalance.ToString();
+
+                _savingBalance = _savingBalance + amount1;
+                outSavingBox.Text = _savingBalance.ToString();
+
+            }
+        }
+
+        private void Transfer(int amount, string account)
+        {
+            if (account == "Saving Account")//duplicate
+            {
+                _savingBalance = _savingBalance - amount;     //duplicate
+                _currentBalance = _currentBalance + amount;   //duplicate
+                outCurrentBox.Text = _currentBalance.ToString();//duplicate
+                outSavingBox.Text = _savingBalance.ToString();  //duplicate
+
+
+            }
+
+            if (account == "Current Account")//duplicate
+            {
+                _currentBalance = _currentBalance - amount;    //duplicate
+                _savingBalance = _savingBalance + amount;      //duplicate
+                outCurrentBox.Text = _currentBalance.ToString(); //duplicate
+                outSavingBox.Text = _savingBalance.ToString();   //duplicate
+            }
+        }
+
+        private void Withdraw(int amount, string account)
+        {
+            if (account == "Saving Account")//duplicate
+            {
+                _savingBalance = _savingBalance - amount;     //duplicate
+                outSavingBox.Text = _savingBalance.ToString();  //duplicate
+            }
+
+            if (account == "Current Account")//duplicate
+            {
+                _currentBalance = _currentBalance - amount;   //duplicate
+                outCurrentBox.Text = _currentBalance.ToString();//duplicate
+            }
+        }
+
+        public void Deposit(int amount, string account)
+        {
+            if (account == "Saving Account")//duplicate
+            {
+                _savingBalance = _savingBalance + amount;     //duplicate
+                outSavingBox.Text = _savingBalance.ToString();  //duplicate
+            }
+
+            if (account == "Current Account")//duplicate
+            {
+                _currentBalance = _currentBalance + amount;   //duplicate
+                outCurrentBox.Text = _currentBalance.ToString();//duplicate
+            }
+        }
+        #endregion
+
+        private void Radiofd_Checked(object sender, RoutedEventArgs e)
+        {
+            radioFDPanel.Visibility = Visibility.Visible;
         }
     }
 }

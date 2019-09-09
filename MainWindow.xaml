@@ -5,20 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="550" Width="800">
     <Grid>
-        <StackPanel Name="S"  Visibility="Collapsed" >
-            <StackPanel Name="S1" Margin="10" Orientation="Horizontal">
+        <StackPanel Name="signUpPanel"  Visibility="Collapsed" >
+            <StackPanel Name="Usernamepanel" Margin="10" Orientation="Horizontal">
                 <TextBlock Name="uesrblock" Height="40" Width="150" Text="Username :-" FontSize="20" HorizontalAlignment="Left"></TextBlock>
-                <TextBox Height="40" Width="200" Name="userbox" FontSize="20"></TextBox>
+                <TextBox Height="40" Width="200" Name="inUsername" FontSize="20"></TextBox>
             </StackPanel>
 
-            <StackPanel Name="S2" Margin="10" Orientation="Horizontal">
+            <StackPanel Name="PasswordPanel" Margin="10" Orientation="Horizontal">
                 <TextBlock Name="passwordblock" Height="40" Width="150" Text="Password :-" FontSize="20" HorizontalAlignment="Left"></TextBlock>
-                <TextBox Height="40" Width="200" Name="passwordbox" FontSize="20"></TextBox>
+                <TextBox Height="40" Width="200" Name="inPassword" FontSize="20"></TextBox>
             </StackPanel>
 
-            <StackPanel Name="S3" Margin="10" Orientation="Horizontal">
+            <StackPanel Name="FooterPanel" Margin="10" Orientation="Horizontal">
                 <Button Name="signup" Content="Sign up" Height="30" Width="100" HorizontalAlignment="Left" Margin="0 50" FontSize="15" Click="Signup_Click"></Button>
                 <Button Name="login" Content="Log in" Height="30" Width="100" HorizontalAlignment="Left" Margin="150 50" FontSize="15" Click="Login_Click"></Button>
 
@@ -26,25 +26,31 @@
 
         </StackPanel>
 
-        <StackPanel Name="P">
+        <StackPanel Name="profilePanel" Visibility="Visible">
             <StackPanel Name="Balance" Orientation="Vertical">
-            <StackPanel Name="P1" Margin="10" Orientation="Horizontal" >
-                <TextBlock Name="savingblock" Text="Savings Balance:" Height="20" Width="120" FontSize="13" FontWeight="Bold"></TextBlock>
-                <TextBox Name="savingbox" Height="20" Width="100" ></TextBox>
-            </StackPanel>
+                <StackPanel Name="SavingPanel" Margin="10" Orientation="Horizontal" >
+                    <TextBlock Name="savingblock" Text="Savings Balance:" Height="20" Width="120" FontSize="13" FontWeight="Bold"></TextBlock>
+                    <TextBox Name="outSavingBox" Height="20" Width="100" ></TextBox>
+                </StackPanel>
 
-            <StackPanel Name="P2" Margin="10" Orientation="Horizontal">
-                <TextBlock Name="currentblock" Text="Current Balance:" Height="20" Width="120" FontSize="13" FontWeight="Bold" ></TextBlock>
-                <TextBox Name="currentbox" Height="20" Width="100" ></TextBox>
-            </StackPanel>
+                <StackPanel Name="CurrentPanel" Margin="10" Orientation="Horizontal">
+                    <TextBlock Name="currentblock" Text="Current Balance:" Height="20" Width="120" FontSize="13" FontWeight="Bold" ></TextBlock>
+                    <TextBox Name="outCurrentBox" Height="20" Width="100" ></TextBox>
+                </StackPanel>
 
-         </StackPanel>
-            <StackPanel Margin="10" Orientation="Horizontal">
+
+
+                <StackPanel Name="FDPanel" Margin="10" Orientation="Horizontal" >
+                    <TextBlock Name="fdblock" Text="FD Balance:" Height="20" Width="120" FontSize="13" FontWeight="Bold"></TextBlock>
+                    <TextBox Name="outFdBox" Height="20" Width="100" ></TextBox>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Name="AccountTypePanel" Margin="10" Orientation="Horizontal">
                 <TextBlock Text="Account Type:-" FontSize="15" Height="30" Width="150" FontWeight="Bold"></TextBlock>
                 <ComboBox Name="comboaccount"  Height="30" Width="200" FontSize="14" >
                     <ComboBoxItem  Name="combosav" IsSelected="True">Saving Account</ComboBoxItem>
                     <ComboBoxItem Name="combocurrent">Current Account</ComboBoxItem>
-                    
+
                 </ComboBox>
             </StackPanel>
 
@@ -52,6 +58,14 @@
                 <RadioButton Name="radiodeposit" FontSize="15" Height="30" Width="100" HorizontalAlignment="Left">Deposit</RadioButton>
                 <RadioButton Name="radiowithdraw" FontSize="15" Height="30" Width="100" HorizontalAlignment="Left">Withdraw</RadioButton>
                 <RadioButton Name="radiotransfer" FontSize="15" Height="30" Width="100" HorizontalAlignment="Left">Transfer</RadioButton>
+                <RadioButton Name="radiofd" FontSize="15" Height="30" Width="100" HorizontalAlignment="Left" Checked="Radiofd_Checked">FD</RadioButton>
+
+
+                <StackPanel Name="radioFDPanel" Visibility="Collapsed" Orientation="Horizontal">
+                <RadioButton Name="radioFdDeposit" FontSize="15" Height="30" Width="100">FDDeposit</RadioButton>
+                <RadioButton Name="radioFdWithdraw" FontSize="15" Height="30" Width="100">FDWithdraw</RadioButton>
+
+                </StackPanel>
             </StackPanel>
 
             <StackPanel Name="Amount" Margin="10" Orientation="Horizontal">
@@ -59,9 +73,9 @@
                 <TextBox Name="amountbox" Height="30" Width="100" ></TextBox>
             </StackPanel>
 
-            <StackPanel Name="submit_save" Margin="10" Orientation="Vertical">
-                <Button Name="submit" Content="Submit" Height="30" Width="100" HorizontalAlignment="Center"  FontSize="15" Click="Submit_Click"></Button>
-                <Button Name="Save" Content="Save and Quit" Height="30" Width="150" Margin="0 20" HorizontalAlignment="Center"  FontSize="15" Click="Save_Click"></Button>
+            <StackPanel Name="submit_save" Margin="10" Orientation="Horizontal">
+                <Button Name="submit" Content="Submit" Height="30" Width="150" HorizontalAlignment="Center"  FontSize="15" Click="Submit_Click"></Button>
+                <Button Name="Save" Content="Save and Quit" Height="30" Width="150" HorizontalAlignment="Right"  FontSize="15" Click="Save_Click"></Button>
 
             </StackPanel>
         </StackPanel>
