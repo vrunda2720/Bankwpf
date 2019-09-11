@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="800">
     <Grid>
-        <StackPanel Name="signUpPanel"  Visibility="Collapsed" >
+        <StackPanel Name="signUpPanel"  Visibility="Visible" >
             <StackPanel Name="Usernamepanel" Margin="10" Orientation="Horizontal">
                 <TextBlock Name="uesrblock" Height="40" Width="150" Text="Username :-" FontSize="20" HorizontalAlignment="Left"></TextBlock>
                 <TextBox Height="40" Width="200" Name="inUsername" FontSize="20"></TextBox>
@@ -26,7 +26,7 @@
 
         </StackPanel>
 
-        <StackPanel Name="profilePanel" Visibility="Visible">
+        <StackPanel Name="profilePanel" Visibility="Collapsed">
             <StackPanel Name="Balance" Orientation="Vertical">
                 <StackPanel Name="SavingPanel" Margin="10" Orientation="Horizontal" >
                     <TextBlock Name="savingblock" Text="Savings Balance:" Height="20" Width="120" FontSize="13" FontWeight="Bold"></TextBlock>
